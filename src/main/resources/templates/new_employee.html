@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Employment Management</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <style>
+        h1 {
+            color: rgba(21, 63, 132, 0.99);
+            font-family: arial, sans-serif;
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: rgba(21, 56, 132, 0.99);
+            font-family: arial, sans-serif;
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .error{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+    <h1>Add Employee</h1>
+    <hr>
+    <h2>Save Employee</h2>
+
+    <form action="#" th:action="@{/saveEmployee}" th:object = "${employee}"  method="POST">
+        <input type="text" th:field="*{name}" placeholder="employee name" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}" />
+
+
+        <input type="text" th:field="*{address}" placeholder="employee address" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}" />
+
+        <input type="text" th:field="*{dateOfJoining}" placeholder="employee joining date" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('dateOfJoining')}" th:errorclass="error" th:errors="*{dateOfJoining}" />
+
+        <input type="text" th:field="*{pass}" placeholder="set pass" class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('pass')}" th:errorclass="error" th:errors="*{pass}" />
+
+<!--        <input sec:authorize="hasAnyAuthority('ADMIN')" type="text" th:field="*{role}" placeholder="set role"-->
+<!--               th:if="${current_user.role=='ADMIN'}" class="form-control mb-4 col-4">-->
+<!--        <p th:if="${#fields.hasErrors('role')}" th:errorclass="error" th:errors="*{role}" />-->
+
+<div sec:authorize="hasAnyAuthority('ADMIN')"    >  <input  type="text" th:field="*{role}" name="role"
+                        placeholder="set role"   class="form-control mb-4 col-4">
+        <p th:if="${#fields.hasErrors('role')}" th:errorclass="error" th:errors="*{role}" />
+
+</div>
+
+        <button type="submit" name = "request" value="new" class="btn btn-info col-2">Save Employee</button>
+
+
+
+    </form>
+
+</div>
+
+</body>
+</html>
